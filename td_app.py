@@ -104,7 +104,7 @@ raw_row = {
     # Ordinal numeric
     "class": Class, #🚩change variable to match and title for meaning
     # Categorical codes (as in training)
-    "throwing_arm": "Right" #🚩change variable to match and title for meaning
+    "throwing_arm": throwing_arm #🚩change variable to match and title for meaning
 }
 
 raw_df = pd.DataFrame([raw_row])

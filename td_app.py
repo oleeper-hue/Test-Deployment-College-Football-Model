@@ -95,7 +95,16 @@ raw_row = {
     # Ordinal numeric
     "class": Class, #🚩change variable to match and title for meaning
     # Categorical codes (as in training)
-    "throwing_arm_R": throwing_arm #🚩change variable to match and title for meaning
+    "throwing_arm": throwing_arm #🚩change variable to match and title for meaning
+}
+
+raw_row = {
+    # Numeric features
+    "max_bench": max_bench, #🚩change variable to match and title for meaning
+    # Ordinal numeric
+    "class": Class, #🚩change variable to match and title for meaning
+    # Categorical codes (as in training)
+    "throwing_arm": "Right" #🚩change variable to match and title for meaning
 }
 
 raw_df = pd.DataFrame([raw_row])
@@ -103,7 +112,7 @@ raw_df = pd.DataFrame([raw_row])
 # ---------- Encode EXACTLY like training ----------
 # OHE only these categorical code columns; drop_first=True
 ohe_cols = [
-    "throwing_arm_R" #🚩change to match feature column names
+    "throwing_arm" #🚩change to match feature column names
 ]
 
 input_encoded = pd.get_dummies(raw_df, columns=ohe_cols, drop_first=True, dtype=int)

@@ -4,3 +4,4 @@
 - [x] Commit the files to the repository  
 - [x] Create `requirements.txt`  
 - [x] Commit the requirements file
+- [x] Host the app on Streamlit

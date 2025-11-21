@@ -85,7 +85,7 @@ throwing_arm_label = st.selectbox("Throwing Arm", list(throwing_arm_map.values()
 throwing_arm = label_to_code(throwing_arm_label, throwing_arm_map) #🚩change variables to match and for meaning
 
 # Ordinal: keep label for UX, map to integer for the model
-class_label = st.selectbox("Employment Duration", class_levels) #🚩change variable name and title to match, change variable name for meaning
+class_label = st.selectbox("Class", class_levels) #🚩change variable name and title to match, change variable name for meaning
 Class = class_ord[class_label] #🚩change variable names to match, change variable name for meaning
 
 # ---------- Build raw row ----------

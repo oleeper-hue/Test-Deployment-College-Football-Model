@@ -1,4 +1,3 @@
-
 from pathlib import Path
 import streamlit as st
 import pickle
@@ -101,14 +100,7 @@ raw_row = {
 
 raw_df = pd.DataFrame([raw_row])
 
-# ---------- Encode EXACTLY like training ----------
-# OHE only these categorical code columns; drop_first=True
-ohe_cols = [
-    "throwing_arm" #🚩change to match feature column names
-]
-
 input_encoded = pd.get_dummies(raw_df, columns=ohe_cols, drop_first=True, dtype=int)
-input_encoded = input_encoded[['throwing_arm_R', 'class', 'max_bench']] #🚩 must match the order that values are passed to model
 
 # Make sure all expected training columns exist and in the same order
 for col in expected_columns:
@@ -116,7 +108,7 @@ for col in expected_columns:
         input_encoded[col] = 0
 input_encoded = input_encoded[expected_columns]
 
-print(input_encoded)
+input_encoded = input_encoded[['throwing_arm_R', 'class', 'max_bench']] #🚩 must match the order that values are passed to model
 
 st.divider()
 if st.button("Predict"):

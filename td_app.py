@@ -124,7 +124,7 @@ if st.button("Predict"):
 
         st.subheader("Prediction Result")
         if pred:
-            st.success("Prediction: ", pred)
+            st.success(pred)
         else:
             st.error("Prediction Error")
 

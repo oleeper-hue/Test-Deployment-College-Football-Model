@@ -114,7 +114,7 @@ for col in expected_columns:
     if col not in input_encoded.columns:
         input_encoded[col] = 0
 input_encoded = input_encoded[expected_columns]
-
+input_encoded = input_encoded[['throwing_arm_R', 'class', 'max_bench']]
 print(input_encoded)
 
 st.divider()

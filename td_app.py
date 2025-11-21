@@ -92,11 +92,11 @@ Class = class_ord[class_label] #🚩change variable names to match, change varia
 # ---------- Build raw row ----------
 raw_row = {
     # Categorical codes (as in training)
-    "throwing_arm": throwing_arm #🚩change variable to match and title for meaning
+    "throwing_arm": throwing_arm, #🚩change variable to match and title for meaning
     # Ordinal numeric
     "class": Class, #🚩change variable to match and title for meaning
-    # Categorical codes (as in training)
-    "throwing_arm": throwing_arm #🚩change variable to match and title for meaning
+    # Numeric features
+    "max_bench": max_bench #🚩change variable to match and title for meaning
 }
 
 raw_df = pd.DataFrame([raw_row])

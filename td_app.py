@@ -114,6 +114,8 @@ for col in expected_columns:
         input_encoded[col] = 0
 input_encoded = input_encoded[expected_columns]
 
+print(input_encoded)
+
 st.divider()
 if st.button("Predict"):
     try:

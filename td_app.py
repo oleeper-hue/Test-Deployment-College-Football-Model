@@ -91,8 +91,8 @@ Class = class_ord[class_label] #🚩change variable names to match, change varia
 
 # ---------- Build raw row ----------
 raw_row = {
-    # Numeric features
-    "max_bench": max_bench, #🚩change variable to match and title for meaning
+    # Categorical codes (as in training)
+    "throwing_arm": throwing_arm #🚩change variable to match and title for meaning
     # Ordinal numeric
     "class": Class, #🚩change variable to match and title for meaning
     # Categorical codes (as in training)

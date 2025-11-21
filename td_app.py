@@ -98,15 +98,6 @@ raw_row = {
     "throwing_arm": throwing_arm #🚩change variable to match and title for meaning
 }
 
-raw_row = {
-    # Numeric features
-    "max_bench": max_bench, #🚩change variable to match and title for meaning
-    # Ordinal numeric
-    "class": Class, #🚩change variable to match and title for meaning
-    # Categorical codes (as in training)
-    "throwing_arm": throwing_arm #🚩change variable to match and title for meaning
-}
-
 raw_df = pd.DataFrame([raw_row])
 
 # ---------- Encode EXACTLY like training ----------

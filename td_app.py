@@ -108,13 +108,14 @@ ohe_cols = [
 
 input_encoded = pd.get_dummies(raw_df, columns=ohe_cols, drop_first=True, dtype=int)
 
+if "throwing_arm" in input_encoded.columns:
+    input_encoded = input_encoded.drop(columns=["throwing_arm"])
+
 # Make sure all expected training columns exist and in the same order
 for col in expected_columns:
     if col not in input_encoded.columns:
         input_encoded[col] = 0
 input_encoded = input_encoded[expected_columns]
-
-print(input_encoded)
 
 st.divider()
 if st.button("Predict"):

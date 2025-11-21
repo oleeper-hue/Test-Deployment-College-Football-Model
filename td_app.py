@@ -1,4 +1,4 @@
-import pathlib as PATH
+import pathlib as Path
 import streamlit as st
 import pickle
 import pandas as pd

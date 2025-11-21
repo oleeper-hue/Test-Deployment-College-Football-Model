@@ -81,7 +81,7 @@ max_bench = num_slider("max_bench", 225, 100, 405) #🚩change to match numeric 
 st.subheader("Beyond this label: categorical feature dropdown selections") #🚩change for meaning
 
 # Show labels, convert back to codes
-throwing_arm_label = st.selectbox("Throwing Arm", list(throwing_arm_balance_map.values())) #🚩change variables to match and for meaning
+throwing_arm_label = st.selectbox("Throwing Arm", list(throwing_arm_map.values())) #🚩change variables to match and for meaning
 throwing_arm = label_to_code(throwing_arm_label, throwing_arm_map) #🚩change variables to match and for meaning
 
 # Ordinal: keep label for UX, map to integer for the model

@@ -124,7 +124,7 @@ if st.button("Predict"):
 
         st.subheader("Prediction Result")
         if pred:
-            st.success("Prediction: ", round(pred, 2))
+            st.success("Prediction: ", np.round(pred, decimals=2))
         else:
             st.error("Prediction Error")
 

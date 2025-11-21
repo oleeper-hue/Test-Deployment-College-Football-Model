@@ -42,7 +42,7 @@ numeric_ranges = data_info.get("numeric_ranges", {})
 # ---------- Code↔Label maps (UI shows labels; encoding uses codes) ----------
 
 # Ordinal mapping for class (training used ordinal, not OHE) #🚩if no label encoding you can delete these 8 lines
-class_levels = ["unemployed", "< 1 yr", "1–4 yrs", "4–7 yrs", "≥ 7 yrs"] #🚩list of desired dropdown values, change variable name for meaning
+class_levels = ["Freshman", "Sophomore", "Junior", "Senior"] #🚩list of desired dropdown values, change variable name for meaning
 class_ord = { #🚩variable name for meaning
     "Freshman": 0, #🚩change to format {value in post-label encoding column: desired appearance on app}
     "Sophomore": 1, #🚩change to format {value in post-label encoding column: desired appearance on app}

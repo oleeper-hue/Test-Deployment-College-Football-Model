@@ -4,14 +4,14 @@ import pickle
 import pandas as pd
 
 # (Optional) helps unpickling but not strictly required if sklearn is installed
-from sklearn.linear_model import LinearRegression #🚩 change model import from sklearn to intended model
+from sklearn.linear_model import LinearRegression
 
-st.set_page_config(page_title="Test Deployment Model", page_icon="🔬") #🚩change title on tab
+st.set_page_config(page_title="Test Deployment Model", page_icon="🔬")
 
 # ---------- Paths ----------
 HERE = Path(__file__).parent
-MODEL_PATH = HERE / "td_model.pkl"   # your pruned tree
-DATA_INFO_PATH = HERE / "td_data_info.pkl"         # must contain expected_columns, etc.
+MODEL_PATH = HERE / "td_model.pkl"
+DATA_INFO_PATH = HERE / "td_data_info.pkl"
 
 # ---------- Load artifacts ----------
 @st.cache_resource
@@ -35,38 +35,31 @@ except Exception as e:
     st.stop()
 
 expected_columns = data_info["expected_columns"]
-
-# These lists are only used to make nicer sliders; they won't change encoding
 numeric_ranges = data_info.get("numeric_ranges", {})
 
-# ---------- Code↔Label maps (UI shows labels; encoding uses codes) ----------
-
-# Ordinal mapping for class (training used ordinal, not OHE) #🚩if no label encoding you can delete these 8 lines
-class_levels = ["Freshman", "Sophomore", "Junior", "Senior"] #🚩list of desired dropdown values, change variable name for meaning
-class_ord = { #🚩variable name for meaning
-    "Freshman": 0, #🚩change to format {value in post-label encoding column: desired appearance on app}
-    "Sophomore": 1, #🚩change to format {value in post-label encoding column: desired appearance on app}
-    "Junior": 2, #🚩change to format {value in post-label encoding column: desired appearance on app}
-    "Senior": 3, #🚩change to format {value in post-label encoding column: desired appearance on app}
+# ---------- Code↔Label maps ----------
+class_levels = ["Freshman", "Sophomore", "Junior", "Senior"]
+class_ord = {
+    "Freshman": 0,
+    "Sophomore": 1,
+    "Junior": 2,
+    "Senior": 3,
 }
 
-# Dummy encoded categorical variables
-throwing_arm_map = { #🚩change variable name for meaning
-    "L": "Left", #🚩change to format {value in post-label encoding column: desired appearance on app}
-    "R": "Right", #🚩change to format {value in post-label encoding column: desired appearance on app}
+throwing_arm_map = {
+    "L": "Left",
+    "R": "Right",
 }
 
-# Helper: label->code for UI selections
 def label_to_code(selection_label: str, mapping: dict) -> str:
-    # mapping is code->label; invert to label->code
     inv = {v: k for k, v in mapping.items()}
     return inv[selection_label]
 
 # ---------- UI ----------
-st.title("Test Deployment Model: College Football Longest Throw Prediction") #🚩change for meaning
-st.caption("This is the caption under the title") #🚩change for meaning
+st.title("Test Deployment Model: College Football Longest Throw Prediction")
+st.caption("This is the caption under the title")
 
-st.header("Enter College Football Player's Information") #🚩change for meaning
+st.header("Enter College Football Player's Information")
 
 def num_slider(name, default, lo, hi, step=1):
     r = numeric_ranges.get(name, {})
@@ -76,57 +69,52 @@ def num_slider(name, default, lo, hi, step=1):
     return st.slider(name.replace("_", " ").title(), min_value=lo, max_value=hi, value=val, step=step)
 
 # Numeric features
-max_bench = num_slider("max_bench", 225, 100, 405) #🚩change to match numeric features, not including label-encoded categorical columns, change variable name for meaning
+max_bench = num_slider("max_bench", 225, 100, 405)
 
-st.subheader("Beyond this label: categorical feature dropdown selections") #🚩change for meaning
+st.subheader("Beyond this label: categorical feature dropdown selections")
 
-# Show labels, convert back to codes
-throwing_arm_label = st.selectbox("Throwing Arm", list(throwing_arm_map.values())) #🚩change variables to match and for meaning
-throwing_arm = label_to_code(throwing_arm_label, throwing_arm_map) #🚩change variables to match and for meaning
+throwing_arm_label = st.selectbox("Throwing Arm", list(throwing_arm_map.values()))
+throwing_arm = label_to_code(throwing_arm_label, throwing_arm_map)
 
-# Ordinal: keep label for UX, map to integer for the model
-class_label = st.selectbox("Class", class_levels) #🚩change variable name and title to match, change variable name for meaning
-Class = class_ord[class_label] #🚩change variable names to match, change variable name for meaning
+class_label = st.selectbox("Class", class_levels)
+Class = class_ord[class_label]
 
 # ---------- Build raw row ----------
 raw_row = {
-    # Numeric features
-    "max_bench": max_bench, #🚩change variable to match and title for meaning
-    # Ordinal numeric
-    "class": Class, #🚩change variable to match and title for meaning
-    # Categorical codes (as in training)
-    "throwing_arm": throwing_arm #🚩change variable to match and title for meaning
+    "max_bench": max_bench,
+    "class": Class,
+    "throwing_arm": throwing_arm
 }
 
 raw_df = pd.DataFrame([raw_row])
 
 # ---------- Encode EXACTLY like training ----------
-# OHE only these categorical code columns; drop_first=True
-ohe_cols = [
-    "throwing_arm" #🚩change to match feature column names
-]
+ohe_cols = ["throwing_arm"]
 
 input_encoded = pd.get_dummies(raw_df, columns=ohe_cols, drop_first=True, dtype=int)
 
+# 🔧 FIX 1 — Ensure original categorical column is removed
+# (because the trained model never saw it)
 if "throwing_arm" in input_encoded.columns:
     input_encoded = input_encoded.drop(columns=["throwing_arm"])
 
-# Make sure all expected training columns exist and in the same order
+# 🔧 FIX 2 — Add any missing training-time columns (e.g., throwing_arm_R)
 for col in expected_columns:
     if col not in input_encoded.columns:
         input_encoded[col] = 0
+
+# Preserve correct column order
 input_encoded = input_encoded[expected_columns]
+
+print(input_encoded)
 
 st.divider()
 if st.button("Predict"):
     try:
-        pred = model.predict(input_encoded)
+        pred = model.predict(input_encoded)[0]
 
         st.subheader("Prediction Result")
-        if pred:
-            st.success("Prediction: ", round(pred, 2))
-        else:
-            st.error("Prediction Error")
+        st.success(f"Prediction: {round(pred, 2)}")
 
     except Exception as e:
         st.error(f"Inference failed: {e}")

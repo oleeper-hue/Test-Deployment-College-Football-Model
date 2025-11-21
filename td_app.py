@@ -9,12 +9,13 @@ from sklearn.linear_model import LinearRegression #🚩 change model import from
 st.set_page_config(page_title="Test Deployment Model", page_icon="🔬") #🚩change title on tab
 
 # ---------- Paths ----------
-MODEL_PATH = "/content/td_model.pkl" # your pruned tree
-DATA_INFO_PATH = "/content/td_data_info.pkl" # must contain expected_columns, etc.
+HERE = Path(__file__).parent
+MODEL_PATH = HERE / "td_model.pkl"   # your pruned tree
+DATA_INFO_PATH = HERE / "td_data_info.pkl"         # must contain expected_columns, etc.
 
 # ---------- Load artifacts ----------
 @st.cache_resource
-def load_pickle(p):
+def load_pickle(p: Path):
     with p.open("rb") as f:
         return pickle.load(f)
 

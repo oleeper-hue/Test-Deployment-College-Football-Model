@@ -51,7 +51,7 @@ class_ord = { #🚩variable name for meaning
 }
 
 # Dummy encoded categorical variables
-throwing_arm_balance_map = { #🚩change variable name for meaning
+throwing_arm_map = { #🚩change variable name for meaning
     "L": "Left", #🚩change to format {value in post-label encoding column: desired appearance on app}
     "R": "Right", #🚩change to format {value in post-label encoding column: desired appearance on app}
 }

@@ -130,4 +130,4 @@ if st.button("Predict"):
 
     except Exception as e:
         st.error(f"Inference failed: {e}")
-        st.eror(input_encoded)
+        st.error(input_encoded)
